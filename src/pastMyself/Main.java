@@ -57,9 +57,19 @@ public class Main extends BasicGame
         {
             case Title:
                 title.update(gc, delta);
+                if (title.nextState)
+                {
+                    play.init(gc);
+                    state = State.Play;
+                }
                 break;
             case Play:
                 play.update(gc, delta);
+                if (play.nextState)
+                {
+                    title.init(gc);
+                    state = State.Title;
+                }
                 break;
         }
     }

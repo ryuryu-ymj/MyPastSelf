@@ -27,6 +27,18 @@ public class Play extends GameState
 	Time time;
 	Font font;
 
+	private enum PlayState
+    {
+        STAGE_TITLE,
+        STRAT_FIRST_TRIAL,
+        FIRST_TRIAL,
+        START_SECOND_TRIAL,
+        SECOND_TRIAL,
+        GAMEOVER,
+        ;
+    }
+    private PlayState playState;
+
 	/**
 	 * コンストラクタ
 	 */
@@ -46,8 +58,8 @@ public class Play extends GameState
 			throws SlickException
 	{
 		objectPool.init();
-		stageNum = 0;
-		startStage();
+        stageNum = 0;
+        playState = PlayState.STRAT_FIRST_TRIAL;
 	}
 
 	/**
@@ -56,9 +68,34 @@ public class Play extends GameState
 	public void update(GameContainer gc, int delta)
 			throws SlickException
 	{
-		objectPool.collisionDetection();
-		objectPool.update(gc);
-		time.update(gc, counter);
+	    switch (playState)
+        {
+            case STAGE_TITLE:
+                break;
+
+            case STRAT_FIRST_TRIAL:
+                startFirstTrial();
+                playState = PlayState.FIRST_TRIAL;
+                break;
+
+            case FIRST_TRIAL:
+                objectPool.collisionDetection();
+                objectPool.update(gc);
+                time.update(gc, counter);
+                break;
+
+            case START_SECOND_TRIAL:
+                startSecondTrial();
+                playState = PlayState.SECOND_TRIAL;
+                break;
+
+            case SECOND_TRIAL:
+                break;
+
+            case GAMEOVER:
+                break;
+
+        }
 
 		counter++;
 	}
@@ -69,11 +106,22 @@ public class Play extends GameState
 	public void render(GameContainer gc, Graphics g, ImageManager im)
 			throws SlickException
 	{
-		objectPool.render(g, im);
-		time.render(g, im);
+        switch (playState)
+        {
+            case STAGE_TITLE:
+                break;
+            case FIRST_TRIAL:
+                objectPool.render(g, im);
+                time.render(g, im);
+                break;
+            case SECOND_TRIAL:
+                break;
+            case GAMEOVER:
+                break;
+        }
 	}
 
-	private void startStage()
+	private void startFirstTrial()
     {
         stage.loadStageDate(stageNum);
         for (int i = 0; i < stage.getGroundNum(); i++)

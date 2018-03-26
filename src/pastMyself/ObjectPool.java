@@ -293,7 +293,8 @@ public class ObjectPool
 		}
 	}
 
-	public static int getTime() {
+	public static int getTime()
+	{
 		return time;
 	}
 }
