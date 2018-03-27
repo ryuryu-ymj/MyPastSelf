@@ -74,7 +74,14 @@ public class Play extends GameState
                 break;
 
             case STRAT_FIRST_TRIAL:
-                startFirstTrial();
+                stage.loadStageDate(stageNum);
+                objectPool.startGate.activate(stage.getStartX(), stage.getStartY());
+                objectPool.player.activate(stage.getStartX() + ObjectPool.CUBE_WIDTH, stage.getStartY());
+                objectPool.warp.activate(stage.getWarpX(), stage.getWarpY());
+                objectPool.goal.activate(stage.getGoalX(), stage.getGoalY());
+                objectPool.initStage();
+                counter = 0;
+                time.setTimeLimit(stage.getTimeLimit());
                 playState = PlayState.FIRST_TRIAL;
                 break;
 
@@ -112,7 +119,8 @@ public class Play extends GameState
                 break;
 
             case START_SECOND_TRIAL:
-                startSecondTrial();
+                objectPool.disactivateAll();
+                objectPool.player.activate(stage.getStartX() + ObjectPool.CUBE_WIDTH, stage.getStartY());
                 playState = PlayState.SECOND_TRIAL;
                 break;
 
@@ -175,20 +183,4 @@ public class Play extends GameState
                 break;
         }
 	}
-
-	private void startFirstTrial()
-    {
-        stage.loadStageDate(stageNum);
-        objectPool.startGate.activate(stage.getStartX(), stage.getStartY());
-        objectPool.player.activate(stage.getStartX() + ObjectPool.CUBE_WIDTH, stage.getStartY());
-        objectPool.warp.activate(stage.getWarpX(), stage.getWarpY());
-        objectPool.goal.activate(stage.getGoalX(), stage.getGoalY());
-        counter = 0;
-        time.setTimeLimit(stage.getTimeLimit());
-    }
-
-    private void startSecondTrial()
-    {
-        objectPool.player.activate(stage.getStartX() + ObjectPool.CUBE_WIDTH, stage.getStartY());
-    }
 }

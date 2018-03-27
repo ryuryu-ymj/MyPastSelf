@@ -52,15 +52,37 @@ public class ObjectPool
 	 */
 	public void init()
 	{
-		time = 0;
-		isSecondTrial = false;
-		for (int i = 0; i < isGroundDisplay.length; i++)
+	}
+
+    /**
+     * ステージの初めの初期化処理
+     */
+    public void initStage()
+    {
+        time = 0;
+        isSecondTrial = false;
+        for (int i = 0; i < isGroundDisplay.length; i++)
         {
             isGroundDisplay[i] = false;
         }
-	}
+    }
 
-	/**
+    /**
+     * すべてのオブジェクトを消す
+     */
+    public void disactivateAll()
+    {
+        for (int i = 0; i < isGroundDisplay.length; i++)
+        {
+            isGroundDisplay[i] = false;
+        }
+        for (int i = 0; i < grounds.length; i++)
+        {
+            grounds[i].active = false;
+        }
+    }
+
+    /**
 	 * ステップごとの更新.
 	 */
 	public void update(GameContainer gc)
@@ -123,11 +145,6 @@ public class ObjectPool
             pastPlayer.render(g, im);
         }
 	}
-
-	public void initStage()
-    {
-
-    }
 
 	/**
 	 * 新しいgroundを作る
