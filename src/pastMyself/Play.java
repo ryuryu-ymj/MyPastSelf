@@ -30,7 +30,7 @@ public class Play extends GameState
 	private enum PlayState
     {
         STAGE_TITLE,
-        STRAT_FIRST_TRIAL,
+        START_FIRST_TRIAL,
         FIRST_TRIAL,
         START_SECOND_TRIAL,
         SECOND_TRIAL,
@@ -58,8 +58,8 @@ public class Play extends GameState
 			throws SlickException
 	{
 		objectPool.init();
-        stageNum = 1;
-        playState = PlayState.STRAT_FIRST_TRIAL;
+        stageNum = 0;
+        playState = PlayState.STAGE_TITLE;
 	}
 
 	/**
@@ -71,10 +71,12 @@ public class Play extends GameState
 	    switch (playState)
         {
             case STAGE_TITLE:
+                playState = PlayState.START_FIRST_TRIAL;
                 break;
 
-            case STRAT_FIRST_TRIAL:
+            case START_FIRST_TRIAL:
                 stage.loadStageDate(stageNum);
+                objectPool.disactivateAll();
                 objectPool.startGate.activate(stage.getStartX(), stage.getStartY());
                 objectPool.player.activate(stage.getStartX() + ObjectPool.CUBE_WIDTH, stage.getStartY());
                 objectPool.warp.activate(stage.getWarpX(), stage.getWarpY());
@@ -112,7 +114,7 @@ public class Play extends GameState
                 objectPool.collisionDetection();
                 objectPool.update(gc);
                 time.update(gc, counter);
-                if (objectPool.isSecondTrial())
+                if (objectPool.isPlayerWarp())
                 {
                     playState = PlayState.START_SECOND_TRIAL;
                 }
@@ -151,6 +153,11 @@ public class Play extends GameState
                 objectPool.collisionDetection();
                 objectPool.update(gc);
                 time.update(gc, counter);
+                if (objectPool.isPlayerGoal())
+                {
+                    stageNum++;
+                    playState = PlayState.STAGE_TITLE;
+                }
                 break;
 
             case GAMEOVER:

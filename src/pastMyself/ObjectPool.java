@@ -19,7 +19,8 @@ public class ObjectPool
 	Goal goal;
 
 	public static int time;
-    private boolean isSecondTrial;
+    private boolean isPlayerWarp;
+    private boolean isPlayerGoal;
 
 	/** 画面上におけるgroundの数の最大値 */
 	public static final int GROUND_MAX = 100;
@@ -60,7 +61,8 @@ public class ObjectPool
     public void initStage()
     {
         time = 0;
-        isSecondTrial = false;
+        isPlayerWarp = false;
+        isPlayerGoal = false;
         for (int i = 0; i < isGroundDisplay.length; i++)
         {
             isGroundDisplay[i] = false;
@@ -87,7 +89,7 @@ public class ObjectPool
 	 */
 	public void update(GameContainer gc)
 	{
-	    if (isSecondTrial && !pastPlayer.active)
+	    if (isPlayerWarp && !pastPlayer.active)
         {
             pastPlayer.finishRecord(time);
             time = 0;
@@ -285,14 +287,15 @@ public class ObjectPool
         if (player.abX + player.width / 2 > warp.abX && player.abX - player.width / 2 < warp.abX
                 && player.abY + player.height / 2 > warp.abY && player.abY - player.height / 2 < warp.abY)
         {
-            isSecondTrial = true;
+            isPlayerWarp = true;
         }
 
         // playerとgoalの衝突
         if (player.abX + player.width / 2 > goal.abX && player.abX - player.width / 2 < goal.abX
                 && player.abY + player.height / 2 > goal.abY && player.abY - player.height / 2 < goal.abY)
         {
-            System.out.println("goal");
+            //System.out.println("goal");
+            isPlayerGoal = true;
         }
 	}
 
@@ -346,7 +349,11 @@ public class ObjectPool
 		return time;
 	}
 
-    public boolean isSecondTrial() {
-        return isSecondTrial;
+    public boolean isPlayerWarp() {
+        return isPlayerWarp;
+    }
+
+    public boolean isPlayerGoal() {
+        return isPlayerGoal;
     }
 }
