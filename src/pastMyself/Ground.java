@@ -33,10 +33,8 @@ public class Ground extends GameObject
     @Override
     public void update(GameContainer gc, float cameraX, float cameraY)
     {
-
+        //checkLeaving(0);
         changeToDisplayPoint(cameraX, cameraY);
-
-
     }
 
     @Override

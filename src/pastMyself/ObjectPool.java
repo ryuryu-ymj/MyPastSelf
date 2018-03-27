@@ -19,12 +19,17 @@ public class ObjectPool
 	Goal goal;
 
 	public static int time;
-	private boolean isSecondTrial;
+    private boolean isSecondTrial;
 
 	/** 画面上におけるgroundの数の最大値 */
 	public static final int GROUND_MAX = 100;
 	/** playerやgroundの幅 */
 	public static final int CUBE_WIDTH = 55;
+
+    /**
+     * そのgroundが表示されたかどうか
+     */
+    public boolean [] isGroundDisplay = new boolean [StageDate.GROUND_MAX];
 
 	ObjectPool()
 	{
@@ -49,6 +54,10 @@ public class ObjectPool
 	{
 		time = 0;
 		isSecondTrial = false;
+		for (int i = 0; i < isGroundDisplay.length; i++)
+        {
+            isGroundDisplay[i] = false;
+        }
 	}
 
 	/**
@@ -83,7 +92,7 @@ public class ObjectPool
 		warp.update(gc, camera.x, camera.y);
 		goal.update(gc, camera.x, camera.y);
 		camera.update(player.abX, player.abY);
-        System.out.println(time + " " + pastPlayer.active);
+		//System.out.println(time + " " + pastPlayer.active);
 		time++;
 	}
 
@@ -115,8 +124,13 @@ public class ObjectPool
         }
 	}
 
+	public void initStage()
+    {
+
+    }
+
 	/**
-	 * 新しいカードを作る
+	 * 新しいgroundを作る
 	 * @param x groundのx座標
 	 * @param y groundのy座標
 	 * @param type groundのtype
@@ -134,6 +148,23 @@ public class ObjectPool
 		}
 		return -1;
 	}
+
+    /**
+     * オブジェクトが画面内に存在するかの判定
+     * @param x オブジェクトの中心点のx座標
+     * @param y オブジェクトの中心点のy座標
+     * @param width オブジェクトの横幅
+     * @param height オブジェクトの縦幅
+     * @return オブジェクトが画面内に存在するか
+     */
+	public boolean checkEntering(int x, int y, int width, int height)
+    {
+        return x + width / 2 > camera.x - Play.DISPLAY_WIDTH / 2
+                && x - width / 2 < camera.x + Play.DISPLAY_WIDTH / 2
+				&& y + height / 2 > camera.y - Play.DISPLAY_HEIGHT / 2
+				&& y - height / 2 < camera.y + Play.DISPLAY_HEIGHT / 2
+                ;
+    }
 
 	/**
 	 * 衝突判定
@@ -297,4 +328,8 @@ public class ObjectPool
 	{
 		return time;
 	}
+
+    public boolean isSecondTrial() {
+        return isSecondTrial;
+    }
 }

@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Stage
+public class StageDate
 {
     private ArrayList<Integer> groundXs, groundYs;
     private int startX, startY;
@@ -15,11 +15,11 @@ public class Stage
     private int timeLimit;
 
     /** 1ステージにあるgroundの最大数 */
-    private final int GROUND_MAX = 50;
+    public static final int GROUND_MAX = 100;
     /** ステージの最大数 */
-    private final int STAGE_MAX = 5;
+    public static final int STAGE_MAX = 5;
 
-    Stage()
+    StageDate()
     {
         groundXs = new ArrayList<>();
         groundYs = new ArrayList<>();

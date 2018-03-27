@@ -66,9 +66,9 @@ public abstract class GameObject
 	void checkLeaving(int mergin)
 	{
 		if (displayX < - width / 2 - mergin
-				|| abX > Play.DISPLAY_WIDTH + width / 2 + mergin
-				|| abY < - height / 2 - mergin
-				|| abY > Play.DISPLAY_HEIGHT + height / 2 + mergin)
+				|| displayX > Play.DISPLAY_WIDTH + width / 2 + mergin
+				|| displayY < - height / 2 - mergin
+				|| displayY > Play.DISPLAY_HEIGHT + height / 2 + mergin)
 		{
 			active = false;
 		}

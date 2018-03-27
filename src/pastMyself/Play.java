@@ -23,7 +23,7 @@ public class Play extends GameState
 	int stageNum;
 
 	ObjectPool objectPool;
-	Stage stage;
+	StageDate stage;
 	Time time;
 	Font font;
 
@@ -46,7 +46,7 @@ public class Play extends GameState
 	{
 		super();
 		objectPool = new ObjectPool();
-		stage = new Stage();
+		stage = new StageDate();
 		font = new Font("res/font");
 		time = new Time(font, DISPLAY_WIDTH - 110, 20);
 	}
@@ -58,7 +58,7 @@ public class Play extends GameState
 			throws SlickException
 	{
 		objectPool.init();
-        stageNum = 0;
+        stageNum = 1;
         playState = PlayState.STRAT_FIRST_TRIAL;
 	}
 
@@ -79,9 +79,36 @@ public class Play extends GameState
                 break;
 
             case FIRST_TRIAL:
+                for (int i = 0; i < stage.getGroundNum(); i++)
+                {
+                    if (objectPool.checkEntering(stage.getGroundX(i), stage.getGroundY(i), ObjectPool.CUBE_WIDTH, ObjectPool.CUBE_WIDTH))
+                    {
+                        if (!objectPool.isGroundDisplay[i])
+                        {
+                            if (objectPool.newGround(stage.getGroundX(i), stage.getGroundY(i), 0) != -1)
+                            {
+                                objectPool.isGroundDisplay[i] = true;
+                            }
+                            else
+                            {
+                                //System.out.println("groundの数が足りません" + stage.getGroundX(i) + " " + stage.getGroundY(i) + " " + i);
+                            }
+                        }
+                    }
+                    else if (objectPool.isGroundDisplay[i])
+                    {
+                        objectPool.isGroundDisplay[i] = false;
+                    }
+                    //System.out.print(stage.getGroundX(i) + " " + stage.getGroundY(i));
+                    //System.out.println();
+                }
                 objectPool.collisionDetection();
                 objectPool.update(gc);
                 time.update(gc, counter);
+                if (objectPool.isSecondTrial())
+                {
+                    playState = PlayState.START_SECOND_TRIAL;
+                }
                 break;
 
             case START_SECOND_TRIAL:
@@ -90,6 +117,32 @@ public class Play extends GameState
                 break;
 
             case SECOND_TRIAL:
+                for (int i = 0; i < stage.getGroundNum(); i++)
+                {
+                    if (objectPool.checkEntering(stage.getGroundX(i), stage.getGroundY(i), ObjectPool.CUBE_WIDTH, ObjectPool.CUBE_WIDTH))
+                    {
+                        if (!objectPool.isGroundDisplay[i])
+                        {
+                            if (objectPool.newGround(stage.getGroundX(i), stage.getGroundY(i), 0) != -1)
+                            {
+                                objectPool.isGroundDisplay[i] = true;
+                            }
+                            else
+                            {
+                                //System.out.println("groundの数が足りません" + stage.getGroundX(i) + " " + stage.getGroundY(i) + " " + i);
+                            }
+                        }
+                    }
+                    else if (objectPool.isGroundDisplay[i])
+                    {
+                        objectPool.isGroundDisplay[i] = false;
+                    }
+                    //System.out.print(stage.getGroundX(i) + " " + stage.getGroundY(i));
+                    //System.out.println();
+                }
+                objectPool.collisionDetection();
+                objectPool.update(gc);
+                time.update(gc, counter);
                 break;
 
             case GAMEOVER:
@@ -115,6 +168,8 @@ public class Play extends GameState
                 time.render(g, im);
                 break;
             case SECOND_TRIAL:
+                objectPool.render(g, im);
+                time.render(g, im);
                 break;
             case GAMEOVER:
                 break;
@@ -124,12 +179,6 @@ public class Play extends GameState
 	private void startFirstTrial()
     {
         stage.loadStageDate(stageNum);
-        for (int i = 0; i < stage.getGroundNum(); i++)
-        {
-            objectPool.newGround(stage.getGroundX(i), stage.getGroundY(i), 0);
-            //System.out.print(stage.getGroundX(i) + " " + stage.getGroundY(i));
-            //System.out.println();
-        }
         objectPool.startGate.activate(stage.getStartX(), stage.getStartY());
         objectPool.player.activate(stage.getStartX() + ObjectPool.CUBE_WIDTH, stage.getStartY());
         objectPool.warp.activate(stage.getWarpX(), stage.getWarpY());
@@ -140,6 +189,6 @@ public class Play extends GameState
 
     private void startSecondTrial()
     {
-
+        objectPool.player.activate(stage.getStartX() + ObjectPool.CUBE_WIDTH, stage.getStartY());
     }
 }
