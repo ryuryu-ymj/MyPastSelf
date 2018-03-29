@@ -3,6 +3,8 @@ package pastMyself;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
+import java.util.ArrayList;
+
 /**
  * ゲームオブジェクトの管理クラス.
  * オブジェクトのインスタンスを持ち,
@@ -30,7 +32,7 @@ public class ObjectPool
     /**
      * そのgroundが表示されたかどうか
      */
-    public boolean [] isGroundDisplay = new boolean [StageDate.GROUND_MAX];
+    public static boolean [] isGroundDisplay = new boolean [StageDate.GROUND_MAX];
 
 	ObjectPool()
 	{
@@ -67,12 +69,22 @@ public class ObjectPool
         {
             isGroundDisplay[i] = false;
         }
+        for (int i = 0; i < grounds.length; i++)
+        {
+            grounds[i].active = false;
+        }
+        pastPlayer.active = false;
+        pastPlayer.initDate();
+        player.active = false;
+        startGate.active = false;
+        goal.active = false;
+        warp.active = false;
     }
 
     /**
      * すべてのオブジェクトを消す
      */
-    public void disactivateAll()
+    public void disactivateGrounds()
     {
         for (int i = 0; i < isGroundDisplay.length; i++)
         {
@@ -97,7 +109,7 @@ public class ObjectPool
         }
         if (time >= pastPlayer.getFinalCount() && pastPlayer.active)
         {
-            time = 0;
+            //time = 0;
         }
 		if (player.active)
         {
@@ -116,7 +128,8 @@ public class ObjectPool
 		warp.update(gc, camera.x, camera.y);
 		goal.update(gc, camera.x, camera.y);
 		camera.update(player.abX, player.abY);
-		//System.out.println(time + " " + pastPlayer.active);
+        //System.out.println(/*time + " " + pastPlayer.active*/);
+        //System.out.println(camera.x + " " + camera.y);
 		time++;
 	}
 
@@ -155,18 +168,39 @@ public class ObjectPool
 	 * @param type groundのtype
 	 * @return groundsの配列番号　なかったら-1
 	 */
-	public int newGround(int x, int y, int type)
+	public int newGround(int x, int y, int type, int num)
 	{
 		for (int i = 0; i < GROUND_MAX; i++)
 		{
 			if (!grounds[i].active)
 			{
-				grounds[i].activate(x, y, type, i);
+				grounds[i].activate(x, y, type, num);
 				return i;
 			}
 		}
 		return -1;
 	}
+
+	public void moveGround(int groundNum, ArrayList<Integer> groundX, ArrayList<Integer> groundY)
+    {
+        for (int i = 0; i < groundNum; i++)
+        {
+            if (checkEntering(groundX.get(i), groundY.get(i), CUBE_WIDTH, CUBE_WIDTH))
+            {
+                if (!isGroundDisplay[i])
+                {
+                    if (newGround(groundX.get(i), groundY.get(i), 0, i) != -1)
+                    {
+                        isGroundDisplay[i] = true;
+                    }
+                    else
+                    {
+                        System.out.println("groundの数が足りません" + groundX.get(i) + " " + groundY.get(i) + " " + i);
+                    }
+                }
+            }
+        }
+    }
 
     /**
      * オブジェクトが画面内に存在するかの判定
@@ -178,11 +212,12 @@ public class ObjectPool
      */
 	public boolean checkEntering(int x, int y, int width, int height)
     {
-        return x + width / 2 > camera.x - Play.DISPLAY_WIDTH / 2
+        if (x + width / 2 > camera.x - Play.DISPLAY_WIDTH / 2
                 && x - width / 2 < camera.x + Play.DISPLAY_WIDTH / 2
 				&& y + height / 2 > camera.y - Play.DISPLAY_HEIGHT / 2
-				&& y - height / 2 < camera.y + Play.DISPLAY_HEIGHT / 2
-                ;
+				&& y - height / 2 < camera.y + Play.DISPLAY_HEIGHT / 2)
+            return true;
+        return false;
     }
 
 	/**

@@ -58,7 +58,7 @@ public class Play extends GameState
 			throws SlickException
 	{
 		objectPool.init();
-        stageNum = 0;
+        stageNum = 1;
         playState = PlayState.STAGE_TITLE;
 	}
 
@@ -75,42 +75,20 @@ public class Play extends GameState
                 break;
 
             case START_FIRST_TRIAL:
+                objectPool.initStage();
+                objectPool.disactivateGrounds();
                 stage.loadStageDate(stageNum);
-                objectPool.disactivateAll();
                 objectPool.startGate.activate(stage.getStartX(), stage.getStartY());
                 objectPool.player.activate(stage.getStartX() + ObjectPool.CUBE_WIDTH, stage.getStartY());
                 objectPool.warp.activate(stage.getWarpX(), stage.getWarpY());
                 objectPool.goal.activate(stage.getGoalX(), stage.getGoalY());
-                objectPool.initStage();
                 counter = 0;
                 time.setTimeLimit(stage.getTimeLimit());
                 playState = PlayState.FIRST_TRIAL;
                 break;
 
             case FIRST_TRIAL:
-                for (int i = 0; i < stage.getGroundNum(); i++)
-                {
-                    if (objectPool.checkEntering(stage.getGroundX(i), stage.getGroundY(i), ObjectPool.CUBE_WIDTH, ObjectPool.CUBE_WIDTH))
-                    {
-                        if (!objectPool.isGroundDisplay[i])
-                        {
-                            if (objectPool.newGround(stage.getGroundX(i), stage.getGroundY(i), 0) != -1)
-                            {
-                                objectPool.isGroundDisplay[i] = true;
-                            }
-                            else
-                            {
-                                //System.out.println("groundの数が足りません" + stage.getGroundX(i) + " " + stage.getGroundY(i) + " " + i);
-                            }
-                        }
-                    }
-                    else if (objectPool.isGroundDisplay[i])
-                    {
-                        objectPool.isGroundDisplay[i] = false;
-                    }
-                    //System.out.print(stage.getGroundX(i) + " " + stage.getGroundY(i));
-                    //System.out.println();
-                }
+                objectPool.moveGround(stage.getGroundNum(), stage.getGroundXs(), stage.getGroundY());
                 objectPool.collisionDetection();
                 objectPool.update(gc);
                 time.update(gc, counter);
@@ -121,35 +99,13 @@ public class Play extends GameState
                 break;
 
             case START_SECOND_TRIAL:
-                objectPool.disactivateAll();
+                objectPool.disactivateGrounds();
                 objectPool.player.activate(stage.getStartX() + ObjectPool.CUBE_WIDTH, stage.getStartY());
                 playState = PlayState.SECOND_TRIAL;
                 break;
 
             case SECOND_TRIAL:
-                for (int i = 0; i < stage.getGroundNum(); i++)
-                {
-                    if (objectPool.checkEntering(stage.getGroundX(i), stage.getGroundY(i), ObjectPool.CUBE_WIDTH, ObjectPool.CUBE_WIDTH))
-                    {
-                        if (!objectPool.isGroundDisplay[i])
-                        {
-                            if (objectPool.newGround(stage.getGroundX(i), stage.getGroundY(i), 0) != -1)
-                            {
-                                objectPool.isGroundDisplay[i] = true;
-                            }
-                            else
-                            {
-                                //System.out.println("groundの数が足りません" + stage.getGroundX(i) + " " + stage.getGroundY(i) + " " + i);
-                            }
-                        }
-                    }
-                    else if (objectPool.isGroundDisplay[i])
-                    {
-                        objectPool.isGroundDisplay[i] = false;
-                    }
-                    //System.out.print(stage.getGroundX(i) + " " + stage.getGroundY(i));
-                    //System.out.println();
-                }
+                objectPool.moveGround(stage.getGroundNum(), stage.getGroundXs(), stage.getGroundY());
                 objectPool.collisionDetection();
                 objectPool.update(gc);
                 time.update(gc, counter);

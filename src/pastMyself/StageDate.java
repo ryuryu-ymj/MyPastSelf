@@ -15,7 +15,7 @@ public class StageDate
     private int timeLimit;
 
     /** 1ステージにあるgroundの最大数 */
-    public static final int GROUND_MAX = 100;
+    public static final int GROUND_MAX = 200;
     /** ステージの最大数 */
     public static final int STAGE_MAX = 5;
 
@@ -63,7 +63,6 @@ public class StageDate
             System.out.println(stageDate.get(i));
         }
 
-        stageDate.remove(0);
         try
         {
             timeLimit = Integer.valueOf(stageDate.get(0));
@@ -107,30 +106,14 @@ public class StageDate
         }
     }
 
-    public int getGroundX(int num)
+    public ArrayList<Integer> getGroundXs()
     {
-        try
-        {
-            return groundXs.get(num);
-        }
-        catch (Throwable t)
-        {
-            t.printStackTrace();
-            return 0;
-        }
+        return groundXs;
     }
 
-    public int getGroundY(int num)
+    public ArrayList<Integer> getGroundY()
     {
-        try
-        {
-            return groundYs.get(num);
-        }
-        catch (Throwable t)
-        {
-            t.printStackTrace();
-            return 0;
-        }
+        return groundYs;
     }
 
     public int getGroundNum()

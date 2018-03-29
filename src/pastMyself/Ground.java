@@ -33,8 +33,14 @@ public class Ground extends GameObject
     @Override
     public void update(GameContainer gc, float cameraX, float cameraY)
     {
-        //checkLeaving(0);
+        if (checkLeaving(0))
+        {
+            active = false;
+            ObjectPool.isGroundDisplay[num] = false;
+            System.out.println("delate " + num + " " + (int)abX / 55 + "," + (int)abY / 55);
+        }
         changeToDisplayPoint(cameraX, cameraY);
+        //System.out.print((int)abX / 55 + "," + (int)abY / 55 + " ");
     }
 
     @Override

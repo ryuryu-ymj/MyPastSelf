@@ -63,14 +63,11 @@ public abstract class GameObject
 	 *
 	 * @param mergin 余裕
 	 */
-	void checkLeaving(int mergin)
+	boolean checkLeaving(int mergin)
 	{
-		if (displayX < - width / 2 - mergin
+		return  (displayX < - width / 2 - mergin
 				|| displayX > Play.DISPLAY_WIDTH + width / 2 + mergin
 				|| displayY < - height / 2 - mergin
-				|| displayY > Play.DISPLAY_HEIGHT + height / 2 + mergin)
-		{
-			active = false;
-		}
+				|| displayY > Play.DISPLAY_HEIGHT + height / 2 + mergin);
 	}
 }

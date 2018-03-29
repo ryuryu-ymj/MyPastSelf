@@ -26,13 +26,13 @@ public class PastPlayer extends GameObject
         recordYs = new float[X_MAX];
         this.width = width;
         this.height = height;
-        init();
+        initDate();
     }
 
     /**
      * 座標データの初期化
      */
-    public void init()
+    public void initDate()
     {
         for (int i = 0; i < recordXs.length; i++)
         {
@@ -69,13 +69,18 @@ public class PastPlayer extends GameObject
     @Override
     public void update(GameContainer gc, float cameraX, float cameraY)
     {
-        if (ObjectPool.time + 1 < X_MAX)
+        if (ObjectPool.time + 1 < finalCount)
         {
             speedX = recordXs[ObjectPool.time + 1] - recordXs[ObjectPool.time];
             speedY = recordYs[ObjectPool.time + 1] - recordYs[ObjectPool.time];
+            abX = recordXs[ObjectPool.time];
+            abY = recordYs[ObjectPool.time];
         }
-        abX = recordXs[ObjectPool.time];
-        abY = recordYs[ObjectPool.time];
+        else
+        {
+            speedX = 0;
+            speedY = 0;
+        }
         changeToDisplayPoint(cameraX, cameraY);
     }
 

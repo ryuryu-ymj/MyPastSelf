@@ -3,6 +3,8 @@ package pastMyself;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
+import java.util.TimerTask;
+
 public class Time
 {
     private int x, y;
@@ -19,12 +21,9 @@ public class Time
 
     public void update(GameContainer gc, int counter)
     {
-        if (gc.getFPS() != 0)
+        if (time <= counter / 60)
         {
-            if (time <= counter / gc.getFPS())
-            {
-                time = counter / gc.getFPS();
-            }
+            time = counter / 60;
         }
     }
 
