@@ -60,7 +60,7 @@ public class Play extends GameState
 			throws SlickException
 	{
 		objectPool.init();
-        stageNum = 1;
+        stageNum = 0;
         playState = PlayState.STAGE_TITLE;
 	}
 

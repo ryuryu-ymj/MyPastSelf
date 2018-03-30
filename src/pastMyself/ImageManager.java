@@ -17,6 +17,7 @@ public class ImageManager
 	private Image goal;
 	private Image start;
 	private Image warp;
+	private Image background;
 	/* 画像の余白の幅 */
 	private final int MARGIN = 78;
 
@@ -41,6 +42,7 @@ public class ImageManager
             goal = ss.getSubImage(1, 0);
             start = ss.getSubImage(2, 0);
             warp = ss.getSubImage(3, 0);
+            background = ss.getSubImage(4, 0);
         }
         catch (SlickException e)
         {
@@ -124,5 +126,18 @@ public class ImageManager
     {
         float mergin = MARGIN * width / (player.getWidth() - MARGIN * 2);
         warp.draw(x - width / 2 - mergin, y - height / 2 - mergin, width + mergin * 2, height + mergin * 2);
+    }
+
+    /**
+     * backgroundの画像を表示する
+     * @param x 中心点のx座標
+     * @param y 中心点のy座標
+     * @param width 横幅
+     * @param height 縦幅
+     */
+    public void drawBackground(float x, float y, float width, float height)
+    {
+        float mergin = MARGIN * width / (player.getWidth() - MARGIN * 2);
+        background.draw(x - width / 2 - mergin, y - height / 2 - mergin, width + mergin * 2, height + mergin * 2);
     }
 }

@@ -19,6 +19,7 @@ public class ObjectPool
 	StartGate startGate;
 	Warp warp;
 	Goal goal;
+	Background background;
 
 	public static int time;
     private boolean isPlayerWarp;
@@ -47,6 +48,7 @@ public class ObjectPool
 		startGate = new StartGate(CUBE_WIDTH, CUBE_WIDTH);
 		warp = new Warp(CUBE_WIDTH, CUBE_WIDTH);
 		goal = new Goal(CUBE_WIDTH, CUBE_WIDTH);
+		background = new Background(CUBE_WIDTH, CUBE_WIDTH);
 		init();
 	}
 
@@ -82,7 +84,7 @@ public class ObjectPool
     }
 
     /**
-     * すべてのオブジェクトを消す
+     * すべてのgroundを消す
      */
     public void disactivateGrounds()
     {
@@ -127,6 +129,7 @@ public class ObjectPool
 		startGate.update(gc, camera.x, camera.y);
 		warp.update(gc, camera.x, camera.y);
 		goal.update(gc, camera.x, camera.y);
+		background.update(gc, camera.x, camera.y);
 		camera.update(player.abX, player.abY);
         //System.out.println(/*time + " " + pastPlayer.active*/);
         //System.out.println(camera.x + " " + camera.y);
@@ -138,6 +141,10 @@ public class ObjectPool
 	 */
 	public void render(Graphics g, ImageManager im)
 	{
+        if (background.active)
+        {
+            background.render(g, im);
+        }
 		renderObjects(grounds, g, im);
         if (warp.active)
         {
@@ -234,7 +241,7 @@ public class ObjectPool
         {
             if ((player.abX + player.width / 2 >= pastPlayer.abX - pastPlayer.width / 2
                     && player.abX - player.width / 2 <= pastPlayer.abX + pastPlayer.width / 2)
-                    && player.abY + player.height / 2 + 4 /* 判定を甘く */ >= pastPlayer.abY - pastPlayer.height / 2
+                    && player.abY + player.height / 2 + 5 /* 判定を甘く */ >= pastPlayer.abY - pastPlayer.height / 2
                     && player.abY - player.height / 2 <= pastPlayer.abY + pastPlayer.height / 2)
             {
                 float distanceX = player.abX - pastPlayer.abX;
