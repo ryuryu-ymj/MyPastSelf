@@ -37,7 +37,7 @@ public class Ground extends GameObject
         {
             active = false;
             ObjectPool.isGroundDisplay[num] = false;
-            System.out.println("delate " + num + " " + (int)abX / 55 + "," + (int)abY / 55);
+            //System.out.println("delate " + num + " " + (int)abX / 55 + "," + (int)abY / 55);
         }
         changeToDisplayPoint(cameraX, cameraY);
         //System.out.print((int)abX / 55 + "," + (int)abY / 55 + " ");

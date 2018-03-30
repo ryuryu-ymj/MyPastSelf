@@ -1,8 +1,6 @@
 package pastMyself;
 
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.SlickException;
+import org.newdawn.slick.*;
 
 /**
  * プレイ画面の更新,描画を行うクラス.
@@ -25,7 +23,9 @@ public class Play extends GameState
 	ObjectPool objectPool;
 	StageDate stage;
 	Time time;
-	Font font;
+	Font fontLarge;
+	Font fontSmall;
+	StageTitle stageTitle;
 
 	private enum PlayState
     {
@@ -47,8 +47,10 @@ public class Play extends GameState
 		super();
 		objectPool = new ObjectPool();
 		stage = new StageDate();
-		font = new Font("res/font");
-		time = new Time(font, DISPLAY_WIDTH - 110, 20);
+		fontLarge = new Font("res/font/fontLarge");
+		fontSmall = new Font("res/font/fontSmall");
+		time = new Time(fontLarge, DISPLAY_WIDTH - 110, 20);
+		stageTitle = new StageTitle(fontLarge, fontSmall, DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2);
 	}
 
 	/**
@@ -71,7 +73,10 @@ public class Play extends GameState
 	    switch (playState)
         {
             case STAGE_TITLE:
-                playState = PlayState.START_FIRST_TRIAL;
+                if (gc.getInput().isKeyPressed(Input.KEY_SPACE))
+                {
+                    playState = PlayState.START_FIRST_TRIAL;
+                }
                 break;
 
             case START_FIRST_TRIAL:
@@ -133,6 +138,7 @@ public class Play extends GameState
         switch (playState)
         {
             case STAGE_TITLE:
+                stageTitle.render(stageNum, counter);
                 break;
             case FIRST_TRIAL:
                 objectPool.render(g, im);

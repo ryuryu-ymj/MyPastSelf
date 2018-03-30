@@ -3,8 +3,6 @@ package pastMyself;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
-import java.util.TimerTask;
-
 public class Time
 {
     private int x, y;

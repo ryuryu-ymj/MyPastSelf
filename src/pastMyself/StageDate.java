@@ -44,65 +44,59 @@ public class StageDate
 
             FileReader fr = new FileReader(file);
             BufferedReader br = new BufferedReader(fr);
-            int i = 0;
-            do
+            String line;
+            int lineCnt = 0;
+            groundXs.clear();
+            groundYs.clear();
+            while ((line = br.readLine()) != null)
             {
-                stageDate.add(br.readLine());
-                //System.out.println(stageDate.get(i));
+                System.out.println(line);
+                if(lineCnt == 0)
+                {
+                    try
+                    {
+                        timeLimit = Integer.valueOf(line);
+                    }
+                    catch (NumberFormatException e)
+                    {
+                        System.err.println("timeLimitの取得に失敗しました" + line);
+                        timeLimit = 100;
+                    }
+                }
+                else
+                {
+                    for (int letterCnt = 0; letterCnt < line.length(); letterCnt++)
+                    {
+                        switch (line.charAt(letterCnt))
+                        {
+                            case '0':
+                                groundXs.add(letterCnt * ObjectPool.CUBE_WIDTH);
+                                groundYs.add(lineCnt * ObjectPool.CUBE_WIDTH);
+                                //System.out.println(j + " " + i);
+                                break;
+                            case 's':
+                                startX = letterCnt * ObjectPool.CUBE_WIDTH;
+                                startY = lineCnt * ObjectPool.CUBE_WIDTH;
+                                break;
+                            case 'g':
+                                goalX = letterCnt * ObjectPool.CUBE_WIDTH;
+                                goalY = lineCnt * ObjectPool.CUBE_WIDTH;
+                                break;
+                            case 'w':
+                                warpX = letterCnt * ObjectPool.CUBE_WIDTH;
+                                warpY = lineCnt * ObjectPool.CUBE_WIDTH;
+                                break;
+                        }
+                    }
+                }
+
+                lineCnt++;
             }
-            while (stageDate.get(i++) != null);
-            stageDate.remove(null);
             fr.close();
         }
         catch (IOException e)
         {
             e.printStackTrace();
-        }
-        for (int i = 0; i < stageDate.size(); i++)
-        {
-            System.out.println(stageDate.get(i));
-        }
-
-        try
-        {
-            timeLimit = Integer.valueOf(stageDate.get(0));
-        }
-        catch (NumberFormatException e)
-        {
-            System.out.println("timeLimitの取得に失敗しました" + stageDate.get(0));
-            timeLimit = 100;
-        }
-        finally
-        {
-            stageDate.remove(0);
-        }
-        groundXs.clear();
-        groundYs.clear();
-        for (int i = 0; i < stageDate.size(); i++)
-        {
-            for (int j = 0; j < stageDate.get(i).length(); j++)
-            {
-                switch (stageDate.get(i).charAt(j))
-                {
-                    case '0':
-                        groundXs.add(j * ObjectPool.CUBE_WIDTH);
-                        groundYs.add(i * ObjectPool.CUBE_WIDTH);
-                        //System.out.println(j + " " + i);
-                        break;
-                    case 's':
-                        startX = j * ObjectPool.CUBE_WIDTH;
-                        startY = i * ObjectPool.CUBE_WIDTH;
-                        break;
-                    case 'g':
-                        goalX = j * ObjectPool.CUBE_WIDTH;
-                        goalY = i * ObjectPool.CUBE_WIDTH;
-                        break;
-                    case 'w':
-                        warpX = j * ObjectPool.CUBE_WIDTH;
-                        warpY = i * ObjectPool.CUBE_WIDTH;
-                        break;
-                }
-            }
         }
     }
 
