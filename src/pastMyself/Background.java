@@ -14,14 +14,17 @@ public class Background extends GameObject
 
     public void update(GameContainer gc, float cameraX, float cameraY)
     {
-        abX = -cameraX % ObjectPool.CUBE_WIDTH;
-        abY = -cameraY % ObjectPool.CUBE_WIDTH;
+        abX = 0;
+        abY = 0;
+        changeToDisplayPoint(cameraX, cameraY);
+        displayX = displayX % ObjectPool.CUBE_WIDTH;
+        displayY = displayY % ObjectPool.CUBE_WIDTH;
     }
 
     public void render(Graphics g, ImageManager im)
     {
-        float x = abX;
-        float y = abY;
+        float x = displayX;
+        float y = displayY;
         while (x < Play.DISPLAY_WIDTH)
         {
             while (y < Play.DISPLAY_HEIGHT)
@@ -29,7 +32,7 @@ public class Background extends GameObject
                 im.drawBackground(x, y, width, height);
                 y += ObjectPool.CUBE_WIDTH;
             }
-            y = abY;
+            y = displayY;
             x += ObjectPool.CUBE_WIDTH;
         }
     }

@@ -19,10 +19,7 @@ public class Time
 
     public void update(GameContainer gc, int counter)
     {
-        if (time <= counter / 60)
-        {
-            time = counter / 60;
-        }
+        time = counter / 60;
     }
 
     public void render(Graphics g, ImageManager im)

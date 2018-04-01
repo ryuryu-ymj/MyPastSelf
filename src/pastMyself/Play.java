@@ -7,70 +7,74 @@ import org.newdawn.slick.*;
  */
 public class Play extends GameState
 {
-	/**
-	 * 画面の横幅
-	 */
-	public static final int DISPLAY_WIDTH = 1400;
-	/**
-	 * 画面の縦幅
-	 */
-	public static final int DISPLAY_HEIGHT = 900;
-	/** フレームカウンタ */
-	public static int counter;
-	/** プレイするステージの番号 0から */
-	int stageNum;
+    /**
+     * 画面の横幅
+     */
+    public static final int DISPLAY_WIDTH = 1400;
+    /**
+     * 画面の縦幅
+     */
+    public static final int DISPLAY_HEIGHT = 900;
+    /**
+     * フレームカウンタ
+     */
+    public static int counter;
+    /**
+     * プレイするステージの番号 0から
+     */
+    int stageNum;
 
-	ObjectPool objectPool;
-	StageDate stage;
-	Time time;
-	Font fontLarge;
-	Font fontSmall;
-	StageTitle stageTitle;
+    ObjectPool objectPool;
+    StageDate stage;
+    Time time;
+    Font fontLarge;
+    Font fontSmall;
+    StageTitle stageTitle;
 
-	private enum PlayState
+    private enum PlayState
     {
         STAGE_TITLE,
         START_FIRST_TRIAL,
         FIRST_TRIAL,
         START_SECOND_TRIAL,
         SECOND_TRIAL,
-        GAMEOVER,
-        ;
+        GAMEOVER,;
     }
+
     private PlayState playState;
 
-	/**
-	 * コンストラクタ
-	 */
-	Play()
-	{
-		super();
-		objectPool = new ObjectPool();
-		stage = new StageDate();
-		fontLarge = new Font("res/font/fontLarge");
-		fontSmall = new Font("res/font/fontSmall");
-		time = new Time(fontLarge, DISPLAY_WIDTH - 110, 20);
-		stageTitle = new StageTitle(fontLarge, fontSmall, DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2);
-	}
+    /**
+     * コンストラクタ
+     */
+    Play()
+    {
+        super();
+        objectPool = new ObjectPool();
+        stage = new StageDate();
+        fontLarge = new Font("res/font/fontLarge");
+        fontSmall = new Font("res/font/fontSmall");
+        time = new Time(fontLarge, DISPLAY_WIDTH - 110, 20);
+        stageTitle = new StageTitle(fontLarge, fontSmall, DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2);
+    }
 
-	/**
-	 * 初期化処理.
-	 */
-	public void init(GameContainer gc)
-			throws SlickException
-	{
-		objectPool.init();
+    /**
+     * 初期化処理.
+     */
+    public void init(GameContainer gc)
+            throws SlickException
+    {
+        objectPool.init();
         stageNum = 0;
         playState = PlayState.STAGE_TITLE;
-	}
+    }
 
-	/**
-	 * ステップごとの更新.
-	 */
-	public void update(GameContainer gc, int delta)
-			throws SlickException
-	{
-	    switch (playState)
+    /**
+     * ステップごとの更新.
+     */
+    public void update(GameContainer gc, int delta)
+            throws SlickException
+    {
+        switch (playState)
         {
             case STAGE_TITLE:
                 if (gc.getInput().isKeyPressed(Input.KEY_SPACE))
@@ -93,7 +97,7 @@ public class Play extends GameState
                 break;
 
             case FIRST_TRIAL:
-                objectPool.moveGround(stage.getGroundNum(), stage.getGroundXs(), stage.getGroundY());
+                objectPool.moveGround(stage.getGroundNum(), stage.getGroundXs(), stage.getGroundYs());
                 objectPool.collisionDetection();
                 objectPool.update(gc);
                 time.update(gc, counter);
@@ -110,7 +114,7 @@ public class Play extends GameState
                 break;
 
             case SECOND_TRIAL:
-                objectPool.moveGround(stage.getGroundNum(), stage.getGroundXs(), stage.getGroundY());
+                objectPool.moveGround(stage.getGroundNum(), stage.getGroundXs(), stage.getGroundYs());
                 objectPool.collisionDetection();
                 objectPool.update(gc);
                 time.update(gc, counter);
@@ -126,15 +130,15 @@ public class Play extends GameState
 
         }
 
-		counter++;
-	}
+        counter++;
+    }
 
-	/**
-	 * ステップごとの描画処理.
-	 */
-	public void render(GameContainer gc, Graphics g, ImageManager im)
-			throws SlickException
-	{
+    /**
+     * ステップごとの描画処理.
+     */
+    public void render(GameContainer gc, Graphics g, ImageManager im)
+            throws SlickException
+    {
         switch (playState)
         {
             case STAGE_TITLE:
@@ -151,5 +155,5 @@ public class Play extends GameState
             case GAMEOVER:
                 break;
         }
-	}
+    }
 }

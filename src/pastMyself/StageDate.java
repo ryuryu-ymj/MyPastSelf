@@ -8,25 +8,36 @@ import java.util.ArrayList;
 
 public class StageDate
 {
-    private ArrayList<Integer> groundXs, groundYs;
+    /**
+     * groundの絶対座標（空の場合は-1）
+     */
+    private int[] groundXs, groundYs;
     private int startX, startY;
     private int goalX, goalY;
     private int warpX, warpY;
+    /** 時間制限 */
     private int timeLimit;
+    /**  */
+    int groundNum;
 
-    /** 1ステージにあるgroundの最大数 */
-    public static final int GROUND_MAX = 200;
-    /** ステージの最大数 */
+    /**
+     * 1ステージにあるgroundの最大数
+     */
+    public static final int GROUND_MAX = 100;
+    /**
+     * ステージの最大数
+     */
     public static final int STAGE_MAX = 5;
 
     StageDate()
     {
-        groundXs = new ArrayList<>();
-        groundYs = new ArrayList<>();
+        groundXs = new int[GROUND_MAX];
+        groundYs = new int[GROUND_MAX];
     }
 
     /**
      * ステージのデータを読み込む
+     *
      * @param stageNum ステージ番号
      */
     public void loadStageDate(int stageNum)
@@ -38,7 +49,7 @@ public class StageDate
             File file = new File("res/stage/stage" + (stageNum + 1) + ".txt");
             if (!file.exists())
             {
-                System.out.println("ファイルが存在しません");
+                System.err.println("ファイルが存在しません stage" + (stageNum + 1));
                 return;
             }
 
@@ -46,12 +57,17 @@ public class StageDate
             BufferedReader br = new BufferedReader(fr);
             String line;
             int lineCnt = 0;
-            groundXs.clear();
-            groundYs.clear();
+            groundNum = 0;
+            int groundCnt = 0;
+            for (int i = 0; i < groundXs.length; i++)
+            {
+                groundXs[i] = -1;
+                groundYs[i] = -1;
+            }
             while ((line = br.readLine()) != null)
             {
-                System.out.println(line);
-                if(lineCnt == 0)
+                //System.out.println(line);
+                if (lineCnt == 0)
                 {
                     try
                     {
@@ -70,8 +86,21 @@ public class StageDate
                         switch (line.charAt(letterCnt))
                         {
                             case '0':
-                                groundXs.add(letterCnt * ObjectPool.CUBE_WIDTH);
-                                groundYs.add(lineCnt * ObjectPool.CUBE_WIDTH);
+                                try
+                                {
+                                    groundXs[groundCnt] = letterCnt * ObjectPool.CUBE_WIDTH;
+                                    groundYs[groundCnt] = lineCnt * ObjectPool.CUBE_WIDTH;
+                                    groundNum++;
+                                }
+                                catch (ArrayIndexOutOfBoundsException e)
+                                {
+                                    if (groundNum == groundCnt)
+                                    {
+                                        groundNum--;
+                                    }
+                                    System.err.println("1ステージにあるground数が上限を超えました" + (groundCnt + 1));
+                                }
+                                groundCnt++;
                                 //System.out.println(j + " " + i);
                                 break;
                             case 's':
@@ -100,46 +129,57 @@ public class StageDate
         }
     }
 
-    public ArrayList<Integer> getGroundXs()
+    public int[] getGroundXs()
     {
         return groundXs;
     }
 
-    public ArrayList<Integer> getGroundY()
+    public int[] getGroundYs()
     {
         return groundYs;
     }
 
     public int getGroundNum()
     {
-        return groundXs.size();
+        return groundNum + 1;
     }
 
-    public int getStartX() {
+    public int getStartX()
+    {
         return startX;
     }
 
-    public int getStartY() {
+    public int getStartY()
+    {
         return startY;
     }
 
-    public int getGoalX() {
+    public int getGoalX()
+    {
         return goalX;
     }
 
-    public int getGoalY() {
+    public int getGoalY()
+    {
         return goalY;
     }
 
-    public int getWarpX() {
+    public int getWarpX()
+    {
         return warpX;
     }
 
-    public int getWarpY() {
+    public int getWarpY()
+    {
         return warpY;
     }
 
-    public int getTimeLimit() {
+    /**
+     *
+     * @return 時間制限
+     */
+    public int getTimeLimit()
+    {
         return timeLimit;
     }
 }

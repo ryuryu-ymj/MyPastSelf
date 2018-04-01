@@ -6,23 +6,23 @@ import org.newdawn.slick.SpriteSheet;
 
 /**
  * ゲームで使う画像の管理、描画
- * @author ryuryu
  *
+ * @author ryuryu
  */
 public class ImageManager
 {
-	private Image player;
-	private Image pastPlayer;
-	private Image ground;
-	private Image goal;
-	private Image start;
-	private Image warp;
-	private Image background;
-	/* 画像の余白の幅 */
-	private final int MARGIN = 78;
+    private Image player;
+    private Image pastPlayer;
+    private Image ground;
+    private Image goal;
+    private Image start;
+    private Image warp;
+    private Image background;
+    /* 画像の余白の幅 */
+    private final int MARGIN = 78;
 
-	ImageManager()
-	{
+    ImageManager()
+    {
         try
         {
             SpriteSheet ss = new SpriteSheet("res/img/cube.png", 390, 390);
@@ -48,26 +48,28 @@ public class ImageManager
         {
             e.printStackTrace();
         }
-	}
+    }
 
     /**
      * playerの画像を表示する
-     * @param x 中心点のx座標
-     * @param y 中心点のy座標
-     * @param width 横幅
+     *
+     * @param x      中心点のx座標
+     * @param y      中心点のy座標
+     * @param width  横幅
      * @param height 縦幅
      */
     public void drawPlayer(float x, float y, float width, float height)
     {
-    	float mergin = MARGIN * width / (player.getWidth() - MARGIN * 2);
+        float mergin = MARGIN * width / (player.getWidth() - MARGIN * 2);
         player.draw(x - width / 2 - mergin, y - height / 2 - mergin, width + mergin * 2, height + mergin * 2);
     }
 
     /**
      * pastPlayerの画像を表示する
-     * @param x 中心点のx座標
-     * @param y 中心点のy座標
-     * @param width 横幅
+     *
+     * @param x      中心点のx座標
+     * @param y      中心点のy座標
+     * @param width  横幅
      * @param height 縦幅
      */
     public void drawPastPlayer(float x, float y, float width, float height)
@@ -78,9 +80,10 @@ public class ImageManager
 
     /**
      * pastPlayerの画像を表示する
-     * @param x 中心点のx座標
-     * @param y 中心点のy座標
-     * @param width 横幅
+     *
+     * @param x      中心点のx座標
+     * @param y      中心点のy座標
+     * @param width  横幅
      * @param height 縦幅
      */
     public void drawGround(float x, float y, float width, float height)
@@ -91,9 +94,10 @@ public class ImageManager
 
     /**
      * goalの画像を表示する
-     * @param x 中心点のx座標
-     * @param y 中心点のy座標
-     * @param width 横幅
+     *
+     * @param x      中心点のx座標
+     * @param y      中心点のy座標
+     * @param width  横幅
      * @param height 縦幅
      */
     public void drawGoal(float x, float y, float width, float height)
@@ -104,9 +108,10 @@ public class ImageManager
 
     /**
      * startの画像を表示する
-     * @param x 中心点のx座標
-     * @param y 中心点のy座標
-     * @param width 横幅
+     *
+     * @param x      中心点のx座標
+     * @param y      中心点のy座標
+     * @param width  横幅
      * @param height 縦幅
      */
     public void drawStart(float x, float y, float width, float height)
@@ -117,9 +122,10 @@ public class ImageManager
 
     /**
      * warpの画像を表示する
-     * @param x 中心点のx座標
-     * @param y 中心点のy座標
-     * @param width 横幅
+     *
+     * @param x      中心点のx座標
+     * @param y      中心点のy座標
+     * @param width  横幅
      * @param height 縦幅
      */
     public void drawWarp(float x, float y, float width, float height)
@@ -130,9 +136,10 @@ public class ImageManager
 
     /**
      * backgroundの画像を表示する
-     * @param x 中心点のx座標
-     * @param y 中心点のy座標
-     * @param width 横幅
+     *
+     * @param x      中心点のx座標
+     * @param y      中心点のy座標
+     * @param width  横幅
      * @param height 縦幅
      */
     public void drawBackground(float x, float y, float width, float height)
