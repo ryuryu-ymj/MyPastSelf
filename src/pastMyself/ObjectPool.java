@@ -21,9 +21,10 @@ public class ObjectPool
     Goal goal;
     Background background;
 
-    public static int time;
+    //public static int time;
     private boolean isPlayerWarp;
     private boolean isPlayerGoal;
+    private boolean isPlayerDead;
 
     /**
      * 画面上におけるgroundの数の最大値
@@ -68,9 +69,10 @@ public class ObjectPool
      */
     public void initStage()
     {
-        time = 0;
+        //time = 0;
         isPlayerWarp = false;
         isPlayerGoal = false;
+        isPlayerDead = false;
         for (int i = 0; i < isGroundDisplay.length; i++)
         {
             isGroundDisplay[i] = false;
@@ -109,13 +111,9 @@ public class ObjectPool
     {
         if (isPlayerWarp && !pastPlayer.active)
         {
-            pastPlayer.finishRecord(time);
-            time = 0;
-            pastPlayer.activate();
-        }
-        if (time >= pastPlayer.getFinalCount() && pastPlayer.active)
-        {
+            pastPlayer.finishRecord();
             //time = 0;
+            pastPlayer.activate();
         }
         if (player.active)
         {
@@ -137,7 +135,7 @@ public class ObjectPool
         camera.update(player.abX, player.abY);
         //System.out.println(/*time + " " + pastPlayer.active*/);
         //System.out.println(camera.x + " " + camera.y);
-        time++;
+        //time++;
     }
 
     /**
@@ -326,6 +324,11 @@ public class ObjectPool
                             //System.out.print(ground.num + "on ");
                         }
                     }
+
+                    if (ground.type == Ground.Type.SPINE)
+                    {
+                        isPlayerDead = true;
+                    }
                 }
             }
         }
@@ -392,11 +395,6 @@ public class ObjectPool
         }
     }
 
-    public static int getTime()
-    {
-        return time;
-    }
-
     public boolean isPlayerWarp()
     {
         return isPlayerWarp;
@@ -405,5 +403,10 @@ public class ObjectPool
     public boolean isPlayerGoal()
     {
         return isPlayerGoal;
+    }
+
+    public boolean isPlayerDead()
+    {
+        return isPlayerDead;
     }
 }

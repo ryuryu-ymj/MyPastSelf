@@ -101,6 +101,10 @@ public class Play extends GameState
                 objectPool.collisionDetection();
                 objectPool.update(gc);
                 time.update(gc, counter);
+                if (objectPool.isPlayerDead())
+                {
+                    playState = PlayState.GAMEOVER;
+                }
                 if (objectPool.isPlayerWarp())
                 {
                     playState = PlayState.START_SECOND_TRIAL;
@@ -118,6 +122,10 @@ public class Play extends GameState
                 objectPool.collisionDetection();
                 objectPool.update(gc);
                 time.update(gc, counter);
+                if (objectPool.isPlayerDead())
+                {
+                    playState = PlayState.GAMEOVER;
+                }
                 if (objectPool.isPlayerGoal())
                 {
                     stageNum++;
@@ -126,6 +134,7 @@ public class Play extends GameState
                 break;
 
             case GAMEOVER:
+                playState = PlayState.STAGE_TITLE;
                 break;
 
         }
