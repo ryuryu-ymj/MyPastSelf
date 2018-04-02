@@ -97,7 +97,7 @@ public class Play extends GameState
                 break;
 
             case FIRST_TRIAL:
-                objectPool.moveGround(stage.getGroundNum(), stage.getGroundXs(), stage.getGroundYs());
+                objectPool.moveGround(stage.getGroundNum(), stage.getGroundXs(), stage.getGroundYs(), stage.getGroundTypes());
                 objectPool.collisionDetection();
                 objectPool.update(gc);
                 time.update(gc, counter);
@@ -114,7 +114,7 @@ public class Play extends GameState
                 break;
 
             case SECOND_TRIAL:
-                objectPool.moveGround(stage.getGroundNum(), stage.getGroundXs(), stage.getGroundYs());
+                objectPool.moveGround(stage.getGroundNum(), stage.getGroundXs(), stage.getGroundYs(), stage.getGroundTypes());
                 objectPool.collisionDetection();
                 objectPool.update(gc);
                 time.update(gc, counter);

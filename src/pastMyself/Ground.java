@@ -10,13 +10,23 @@ public class Ground extends GameObject
      */
     int num;
     /**
-     * 0:ノーマル 1:トゲトゲ
+     * groundの型
      */
-    int type;
+    Type type;
     /**
      * トゲトゲの幅
      */
     int side = 20;
+
+    /**
+     * groundの型
+     */
+    public enum Type
+    {
+        NORMAL,
+        SPINE,
+        ;
+    }
 
     /**
      * コンストラクタ
@@ -48,7 +58,15 @@ public class Ground extends GameObject
     {
         //g.setColor(Color.green);
         //g.drawRect(displayX - width / 2, displayY - height / 2, width, height);
-        im.drawGround(displayX, displayY, width, height);
+        switch (type)
+        {
+            case NORMAL:
+                im.drawGround(displayX, displayY, width, height);
+                break;
+            case SPINE:
+                im.drawGroundSpine(displayX, displayY, width, height);
+                break;
+        }
     }
 
     /**
@@ -57,7 +75,7 @@ public class Ground extends GameObject
      * @param y
      * @param type 0:ノーマル 1:トゲトゲ
      */
-    public void activate(int x, int y, int type, int num)
+    public void activate(int x, int y, Type type, int num)
     {
         this.abX = x;
         this.abY = y;

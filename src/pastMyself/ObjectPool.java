@@ -180,7 +180,7 @@ public class ObjectPool
      * @param type groundのtype
      * @return groundsの配列番号　なかったら-1
      */
-    public int newGround(int x, int y, int type, int num)
+    public int newGround(int x, int y, Ground.Type type, int num)
     {
         for (int i = 0; i < GROUND_MAX; i++)
         {
@@ -193,21 +193,21 @@ public class ObjectPool
         return -1;
     }
 
-    public void moveGround(int groundNum, int[] groundX, int[] groundY)
+    public void moveGround(int groundNum, int[] groundXs, int[] groundYs, Ground.Type[] groundTypes)
     {
         for (int i = 0; i < groundNum; i++)
         {
-            if (checkEntering(groundX[i], groundY[i], CUBE_WIDTH, CUBE_WIDTH))
+            if (checkEntering(groundXs[i], groundYs[i], CUBE_WIDTH, CUBE_WIDTH))
             {
                 if (!isGroundDisplay[i])
                 {
-                    if (newGround(groundX[i], groundY[i], 0, i) != -1)
+                    if (newGround(groundXs[i], groundYs[i], groundTypes[i], i) != -1)
                     {
                         isGroundDisplay[i] = true;
                     }
                     else
                     {
-                        System.out.println("groundの数が足りません" + groundX[i] + " " + groundY[i] + " " + i);
+                        System.out.println("groundの数が足りません" + groundXs[i] + " " + groundYs[i] + " " + i);
                     }
                 }
             }
@@ -247,7 +247,7 @@ public class ObjectPool
         {
             if ((player.abX + player.width / 2 >= pastPlayer.abX - pastPlayer.width / 2
                     && player.abX - player.width / 2 <= pastPlayer.abX + pastPlayer.width / 2)
-                    && player.abY + player.height / 2 + 5 /* 判定を甘く */ >= pastPlayer.abY - pastPlayer.height / 2
+                    && player.abY + player.height / 2 /* 判定を甘く */ >= pastPlayer.abY - pastPlayer.height / 2
                     && player.abY - player.height / 2 <= pastPlayer.abY + pastPlayer.height / 2)
             {
                 float distanceX = player.abX - pastPlayer.abX;

@@ -30,10 +30,12 @@ public class Background extends GameObject
             while (y < Play.DISPLAY_HEIGHT)
             {
                 im.drawBackground(x, y, width, height);
-                y += ObjectPool.CUBE_WIDTH;
+                //System.out.print("(" + x + " " + y + " " + width + " " + height + ")");
+                y += ObjectPool.CUBE_WIDTH * ImageManager.BACKGROUND_Y_NUM;
             }
             y = displayY;
-            x += ObjectPool.CUBE_WIDTH;
+            x += ObjectPool.CUBE_WIDTH * ImageManager.BACKGROUND_X_NUM;
         }
+        // System.out.println();
     }
 }

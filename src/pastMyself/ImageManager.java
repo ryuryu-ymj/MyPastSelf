@@ -14,12 +14,17 @@ public class ImageManager
     private Image player;
     private Image pastPlayer;
     private Image ground;
+    private Image groundSpine;
     private Image goal;
     private Image start;
     private Image warp;
     private Image background;
-    /* 画像の余白の幅 */
+    /** 画像の余白の幅 */
     private final int MARGIN = 78;
+    /** 背景の画像のcubeの列数 */
+    public static final int BACKGROUND_X_NUM = 1;
+    /** 背景の画像のcubeの段数 */
+    public static final int BACKGROUND_Y_NUM = 1;
 
     ImageManager()
     {
@@ -43,11 +48,21 @@ public class ImageManager
             start = ss.getSubImage(2, 0);
             warp = ss.getSubImage(3, 0);
             background = ss.getSubImage(4, 0);
+            groundSpine = ss.getSubImage(0, 1);
         }
         catch (SlickException e)
         {
             e.printStackTrace();
         }
+
+        /*try
+        {
+            background = new Image(("res/img/background.png"));
+        }
+        catch (SlickException e)
+        {
+            e.printStackTrace();
+        }*/
     }
 
     /**
@@ -79,7 +94,7 @@ public class ImageManager
     }
 
     /**
-     * pastPlayerの画像を表示する
+     * groundの画像を表示する
      *
      * @param x      中心点のx座標
      * @param y      中心点のy座標
@@ -90,6 +105,20 @@ public class ImageManager
     {
         float mergin = MARGIN * width / (player.getWidth() - MARGIN * 2);
         ground.draw(x - width / 2 - mergin, y - height / 2 - mergin, width + mergin * 2, height + mergin * 2);
+    }
+
+    /**
+     * とげとげの画像を表示する
+     *
+     * @param x      中心点のx座標
+     * @param y      中心点のy座標
+     * @param width  横幅
+     * @param height 縦幅
+     */
+    public void drawGroundSpine(float x, float y, float width, float height)
+    {
+        float mergin = MARGIN * width / (player.getWidth() - MARGIN * 2);
+        groundSpine.draw(x - width / 2 - mergin, y - height / 2 - mergin, width + mergin * 2, height + mergin * 2);
     }
 
     /**
@@ -137,14 +166,15 @@ public class ImageManager
     /**
      * backgroundの画像を表示する
      *
-     * @param x      中心点のx座標
-     * @param y      中心点のy座標
-     * @param width  横幅
-     * @param height 縦幅
+     * @param x          中心点のx座標
+     * @param y          中心点のy座標
+     * @param cubeWidth  横幅
+     * @param cubeHeight 縦幅
      */
-    public void drawBackground(float x, float y, float width, float height)
+    public void drawBackground(float x, float y, float cubeWidth, float cubeHeight)
     {
-        float mergin = MARGIN * width / (player.getWidth() - MARGIN * 2);
-        background.draw(x - width / 2 - mergin, y - height / 2 - mergin, width + mergin * 2, height + mergin * 2);
+        float mergin = MARGIN * cubeWidth * BACKGROUND_X_NUM / (background.getWidth() - MARGIN * 2);
+        background.draw(x - cubeWidth / 2 - mergin, y - cubeHeight / 2 - mergin,
+                cubeWidth * BACKGROUND_X_NUM + mergin * 2, cubeHeight * BACKGROUND_Y_NUM + mergin * 2);
     }
 }

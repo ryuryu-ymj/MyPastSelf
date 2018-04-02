@@ -12,6 +12,10 @@ public class StageDate
      * groundの絶対座標（空の場合は-1）
      */
     private int[] groundXs, groundYs;
+    /**
+     * groundの型
+     */
+    private Ground.Type[] groundTypes;
     private int startX, startY;
     private int goalX, goalY;
     private int warpX, warpY;
@@ -33,6 +37,7 @@ public class StageDate
     {
         groundXs = new int[GROUND_MAX];
         groundYs = new int[GROUND_MAX];
+        groundTypes = new Ground.Type[GROUND_MAX];
     }
 
     /**
@@ -86,10 +91,21 @@ public class StageDate
                         switch (line.charAt(letterCnt))
                         {
                             case '0':
+                            case '1':
                                 try
                                 {
                                     groundXs[groundCnt] = letterCnt * ObjectPool.CUBE_WIDTH;
                                     groundYs[groundCnt] = lineCnt * ObjectPool.CUBE_WIDTH;
+                                    switch (line.charAt(letterCnt))
+                                    {
+                                        case '0':
+                                            groundTypes[groundCnt] = Ground.Type.NORMAL;
+                                            break;
+                                        case '1':
+                                            groundTypes[groundCnt] = Ground.Type.SPINE;
+                                            break;
+                                    }
+                                    //System.out.println(groundCnt + " " + groundXs[groundCnt] + " " + groundYs[groundCnt]);
                                     groundNum++;
                                 }
                                 catch (ArrayIndexOutOfBoundsException e)
@@ -141,7 +157,12 @@ public class StageDate
 
     public int getGroundNum()
     {
-        return groundNum + 1;
+        return groundNum;
+    }
+
+    public Ground.Type[] getGroundTypes()
+    {
+        return groundTypes;
     }
 
     public int getStartX()
