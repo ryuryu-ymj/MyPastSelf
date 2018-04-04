@@ -92,6 +92,8 @@ public class StageDate
                         {
                             case '0':
                             case '1':
+                            case '2':
+                            case '3':
                                 try
                                 {
                                     groundXs[groundCnt] = letterCnt * ObjectPool.CUBE_WIDTH;
@@ -104,6 +106,13 @@ public class StageDate
                                         case '1':
                                             groundTypes[groundCnt] = Ground.Type.SPINE;
                                             break;
+                                        case '2':
+                                            groundTypes[groundCnt] = Ground.Type.DISAPPEAR;
+                                            break;
+                                        case '3':
+                                            groundTypes[groundCnt] = Ground.Type.APPEAR;
+                                            break;
+
                                     }
                                     //System.out.println(groundCnt + " " + groundXs[groundCnt] + " " + groundYs[groundCnt]);
                                     groundNum++;

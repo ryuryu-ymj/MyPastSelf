@@ -96,7 +96,7 @@ public class PastPlayer extends GameObject
             activate();
         }
         changeToDisplayPoint(cameraX, cameraY);
-        System.out.println(counter);
+        //System.out.println(counter);
         counter++;
     }
 

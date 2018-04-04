@@ -64,7 +64,7 @@ public class Play extends GameState
             throws SlickException
     {
         objectPool.init();
-        stageNum = 0;
+        stageNum = 2;
         playState = PlayState.STAGE_TITLE;
     }
 
@@ -84,7 +84,7 @@ public class Play extends GameState
                 break;
 
             case START_FIRST_TRIAL:
-                objectPool.initStage();
+                objectPool.initFirst();
                 objectPool.disactivateGrounds();
                 stage.loadStageDate(stageNum);
                 objectPool.startGate.activate(stage.getStartX(), stage.getStartY());
@@ -114,6 +114,7 @@ public class Play extends GameState
             case START_SECOND_TRIAL:
                 objectPool.disactivateGrounds();
                 objectPool.player.activate(stage.getStartX() + ObjectPool.CUBE_WIDTH, stage.getStartY());
+                objectPool.initSecond();
                 playState = PlayState.SECOND_TRIAL;
                 break;
 

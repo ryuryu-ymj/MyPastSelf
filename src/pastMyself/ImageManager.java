@@ -15,6 +15,8 @@ public class ImageManager
     private Image pastPlayer;
     private Image ground;
     private Image groundSpine;
+    private Image groundAppear;
+    private Image groundDisappear;
     private Image goal;
     private Image start;
     private Image warp;
@@ -49,6 +51,8 @@ public class ImageManager
             warp = ss.getSubImage(3, 0);
             background = ss.getSubImage(4, 0);
             groundSpine = ss.getSubImage(0, 1);
+            groundAppear = ss.getSubImage(1, 1);
+            groundDisappear = ss.getSubImage(2, 1);
         }
         catch (SlickException e)
         {
@@ -108,7 +112,7 @@ public class ImageManager
     }
 
     /**
-     * とげとげの画像を表示する
+     * とげとげgroundの画像を表示する
      *
      * @param x      中心点のx座標
      * @param y      中心点のy座標
@@ -119,6 +123,34 @@ public class ImageManager
     {
         float mergin = MARGIN * width / (player.getWidth() - MARGIN * 2);
         groundSpine.draw(x - width / 2 - mergin, y - height / 2 - mergin, width + mergin * 2, height + mergin * 2);
+    }
+
+    /**
+     * 半点線groundの画像を表示する
+     *
+     * @param x      中心点のx座標
+     * @param y      中心点のy座標
+     * @param width  横幅
+     * @param height 縦幅
+     */
+    public void drawGroundAppear(float x, float y, float width, float height)
+    {
+        float mergin = MARGIN * width / (player.getWidth() - MARGIN * 2);
+        groundAppear.draw(x - width / 2 - mergin, y - height / 2 - mergin, width + mergin * 2, height + mergin * 2);
+    }
+
+    /**
+     * 点線groundの画像を表示する
+     *
+     * @param x      中心点のx座標
+     * @param y      中心点のy座標
+     * @param width  横幅
+     * @param height 縦幅
+     */
+    public void drawGroundDisappear(float x, float y, float width, float height)
+    {
+        float mergin = MARGIN * width / (player.getWidth() - MARGIN * 2);
+        groundDisappear.draw(x - width / 2 - mergin, y - height / 2 - mergin, width + mergin * 2, height + mergin * 2);
     }
 
     /**

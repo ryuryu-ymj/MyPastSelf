@@ -67,7 +67,7 @@ public class ObjectPool
     /**
      * ステージの初めの初期化処理
      */
-    public void initStage()
+    public void initFirst()
     {
         //time = 0;
         isPlayerWarp = false;
@@ -90,6 +90,19 @@ public class ObjectPool
     }
 
     /**
+     * ワープ後の初期化
+     */
+    public void initSecond()
+    {
+        pastPlayer.finishRecord();
+        pastPlayer.activate();
+        for (int i = 0; i < grounds.length; i++)
+        {
+            grounds[i].changeAppearance();
+        }
+    }
+
+    /**
      * すべてのgroundを消す
      */
     public void disactivateGrounds()
@@ -109,12 +122,6 @@ public class ObjectPool
      */
     public void update(GameContainer gc)
     {
-        if (isPlayerWarp && !pastPlayer.active)
-        {
-            pastPlayer.finishRecord();
-            //time = 0;
-            pastPlayer.activate();
-        }
         if (player.active)
         {
             player.update(gc, camera.x, camera.y);
@@ -325,7 +332,7 @@ public class ObjectPool
                         }
                     }
 
-                    if (ground.type == Ground.Type.SPINE)
+                    if (ground.getType() == Ground.Type.SPINE)
                     {
                         isPlayerDead = true;
                     }

@@ -8,15 +8,15 @@ public class Ground extends GameObject
     /**
      * groundがステージ上のどの地面を演じているのか（groundXの番号）
      */
-    int num;
+    private int num;
     /**
      * groundの型
      */
-    Type type;
+    private Type type;
     /**
-     * トゲトゲの幅
+     * 点線表示かどうか
      */
-    int side = 20;
+    //private boolean isDotted;
 
     /**
      * groundの型
@@ -25,12 +25,14 @@ public class Ground extends GameObject
     {
         NORMAL,
         SPINE,
-        ;
+        DISAPPEAR,
+        APPEAR,
     }
 
     /**
      * コンストラクタ
-     * @param width 横幅
+     *
+     * @param width  横幅
      * @param height 縦幅
      */
     Ground(int width, int height)
@@ -66,11 +68,18 @@ public class Ground extends GameObject
             case SPINE:
                 im.drawGroundSpine(displayX, displayY, width, height);
                 break;
+            case APPEAR:
+                im.drawGroundAppear(displayX, displayY, width, height);
+                break;
+            case DISAPPEAR:
+                im.drawGroundDisappear(displayX, displayY, width, height);
+                break;
         }
     }
 
     /**
      * 初期化処理
+     *
      * @param x
      * @param y
      * @param type 0:ノーマル 1:トゲトゲ
@@ -82,5 +91,24 @@ public class Ground extends GameObject
         this.type = type;
         this.num = num;
         active = true;
+    }
+
+    public void changeAppearance()
+    {
+        if (type == Type.DISAPPEAR)
+        {
+            type = Type.APPEAR;
+            return;
+        }
+        else if (type == Type.APPEAR)
+        {
+            type = Type.DISAPPEAR;
+            return;
+        }
+    }
+
+    public Type getType()
+    {
+        return type;
     }
 }
