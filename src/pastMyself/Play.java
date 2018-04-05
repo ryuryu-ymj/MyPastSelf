@@ -112,8 +112,9 @@ public class Play extends GameState
                 break;
 
             case START_SECOND_TRIAL:
-                objectPool.disactivateGrounds();
                 objectPool.player.activate(stage.getStartX() + ObjectPool.CUBE_WIDTH, stage.getStartY());
+                objectPool.disactivateGrounds();
+                objectPool.moveGround(stage.getGroundNum(), stage.getGroundXs(), stage.getGroundYs(), stage.getGroundTypes());
                 objectPool.initSecond();
                 playState = PlayState.SECOND_TRIAL;
                 break;

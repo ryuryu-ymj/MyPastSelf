@@ -27,7 +27,7 @@ public class StageDate
     /**
      * 1ステージにあるgroundの最大数
      */
-    public static final int GROUND_MAX = 100;
+    public static final int GROUND_MAX = 150;
     /**
      * ステージの最大数
      */

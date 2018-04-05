@@ -51,8 +51,8 @@ public class ImageManager
             warp = ss.getSubImage(3, 0);
             background = ss.getSubImage(4, 0);
             groundSpine = ss.getSubImage(0, 1);
-            groundAppear = ss.getSubImage(1, 1);
-            groundDisappear = ss.getSubImage(2, 1);
+            groundDisappear = ss.getSubImage(1, 1);
+            groundAppear = ss.getSubImage(2, 1);
         }
         catch (SlickException e)
         {

@@ -13,10 +13,6 @@ public class Ground extends GameObject
      * groundの型
      */
     private Type type;
-    /**
-     * 点線表示かどうか
-     */
-    //private boolean isDotted;
 
     /**
      * groundの型
@@ -98,11 +94,13 @@ public class Ground extends GameObject
         if (type == Type.DISAPPEAR)
         {
             type = Type.APPEAR;
+            System.out.println(0);
             return;
         }
         else if (type == Type.APPEAR)
         {
             type = Type.DISAPPEAR;
+            System.out.println(1);
             return;
         }
     }

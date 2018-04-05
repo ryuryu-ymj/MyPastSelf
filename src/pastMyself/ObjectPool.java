@@ -12,14 +12,14 @@ import java.util.ArrayList;
  */
 public class ObjectPool
 {
-    Player player;
-    Camera camera;
-    Ground[] grounds;
-    PastPlayer pastPlayer;
-    StartGate startGate;
-    Warp warp;
-    Goal goal;
-    Background background;
+    public Player player;
+    public Camera camera;
+    public Ground[] grounds;
+    public PastPlayer pastPlayer;
+    public StartGate startGate;
+    public Warp warp;
+    public Goal goal;
+    public Background background;
 
     //public static int time;
     private boolean isPlayerWarp;
@@ -291,7 +291,7 @@ public class ObjectPool
         // playerとgroundの衝突
         for (Ground ground : grounds)
         {
-            if (ground.active)
+            if (ground.active && !(ground.getType() == Ground.Type.DISAPPEAR))
             {
                 if ((player.abX + player.width / 2 >= ground.abX - ground.width / 2
                         && player.abX - player.width / 2 <= ground.abX + ground.width / 2)
