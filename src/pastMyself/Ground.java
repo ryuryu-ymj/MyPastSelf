@@ -13,16 +13,21 @@ public class Ground extends GameObject
      * groundの型
      */
     private Type type;
+    private static boolean isPlayerWarped;
 
     /**
      * groundの型
      */
     public enum Type
     {
+        /** 普通 */
         NORMAL,
+        /** トゲトゲ */
         SPINE,
-        DISAPPEAR,
-        APPEAR,
+        /** ワープ後に消える */
+        TO_DISAPPEAR,
+        /** ワープ後に現れる */
+        TO_APPEAR,
     }
 
     /**
@@ -64,11 +69,25 @@ public class Ground extends GameObject
             case SPINE:
                 im.drawGroundSpine(displayX, displayY, width, height);
                 break;
-            case APPEAR:
-                im.drawGroundAppear(displayX, displayY, width, height);
+            case TO_APPEAR:
+                if (!isPlayerWarped)
+                {
+                    im.drawGroundDot(displayX, displayY, width, height);
+                }
+                else
+                {
+                    im.drawGroundDotHalf(displayX, displayY, width, height);
+                }
                 break;
-            case DISAPPEAR:
-                im.drawGroundDisappear(displayX, displayY, width, height);
+            case TO_DISAPPEAR:
+                if (!isPlayerWarped)
+                {
+                    im.drawGroundDotHalf(displayX, displayY, width, height);
+                }
+                else
+                {
+                    im.drawGroundDot(displayX, displayY, width, height);
+                }
                 break;
         }
     }
@@ -89,7 +108,7 @@ public class Ground extends GameObject
         active = true;
     }
 
-    public void changeAppearance()
+    /*public void changeAppearance()
     {
         if (type == Type.DISAPPEAR)
         {
@@ -103,10 +122,20 @@ public class Ground extends GameObject
             System.out.println(1);
             return;
         }
-    }
+    }*/
 
     public Type getType()
     {
         return type;
+    }
+
+    public static void startFirstTrial()
+    {
+        isPlayerWarped = false;
+    }
+
+    public static void startSecondTrial()
+    {
+        isPlayerWarped = true;
     }
 }

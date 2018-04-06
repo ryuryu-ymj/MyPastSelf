@@ -107,10 +107,10 @@ public class StageDate
                                             groundTypes[groundCnt] = Ground.Type.SPINE;
                                             break;
                                         case '2':
-                                            groundTypes[groundCnt] = Ground.Type.DISAPPEAR;
+                                            groundTypes[groundCnt] = Ground.Type.TO_APPEAR;
                                             break;
                                         case '3':
-                                            groundTypes[groundCnt] = Ground.Type.APPEAR;
+                                            groundTypes[groundCnt] = Ground.Type.TO_DISAPPEAR;
                                             break;
 
                                     }

@@ -15,8 +15,8 @@ public class ImageManager
     private Image pastPlayer;
     private Image ground;
     private Image groundSpine;
-    private Image groundAppear;
-    private Image groundDisappear;
+    private Image groundDotHalf;
+    private Image groundDot;
     private Image goal;
     private Image start;
     private Image warp;
@@ -51,8 +51,8 @@ public class ImageManager
             warp = ss.getSubImage(3, 0);
             background = ss.getSubImage(4, 0);
             groundSpine = ss.getSubImage(0, 1);
-            groundDisappear = ss.getSubImage(1, 1);
-            groundAppear = ss.getSubImage(2, 1);
+            groundDot = ss.getSubImage(1, 1);
+            groundDotHalf = ss.getSubImage(2, 1);
         }
         catch (SlickException e)
         {
@@ -133,10 +133,10 @@ public class ImageManager
      * @param width  横幅
      * @param height 縦幅
      */
-    public void drawGroundAppear(float x, float y, float width, float height)
+    public void drawGroundDotHalf(float x, float y, float width, float height)
     {
         float mergin = MARGIN * width / (player.getWidth() - MARGIN * 2);
-        groundAppear.draw(x - width / 2 - mergin, y - height / 2 - mergin, width + mergin * 2, height + mergin * 2);
+        groundDotHalf.draw(x - width / 2 - mergin, y - height / 2 - mergin, width + mergin * 2, height + mergin * 2);
     }
 
     /**
@@ -147,10 +147,10 @@ public class ImageManager
      * @param width  横幅
      * @param height 縦幅
      */
-    public void drawGroundDisappear(float x, float y, float width, float height)
+    public void drawGroundDot(float x, float y, float width, float height)
     {
         float mergin = MARGIN * width / (player.getWidth() - MARGIN * 2);
-        groundDisappear.draw(x - width / 2 - mergin, y - height / 2 - mergin, width + mergin * 2, height + mergin * 2);
+        groundDot.draw(x - width / 2 - mergin, y - height / 2 - mergin, width + mergin * 2, height + mergin * 2);
     }
 
     /**

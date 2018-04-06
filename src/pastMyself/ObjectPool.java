@@ -87,6 +87,7 @@ public class ObjectPool
         startGate.active = false;
         goal.active = false;
         warp.active = false;
+        Ground.startFirstTrial();
     }
 
     /**
@@ -96,10 +97,7 @@ public class ObjectPool
     {
         pastPlayer.finishRecord();
         pastPlayer.activate();
-        for (int i = 0; i < grounds.length; i++)
-        {
-            grounds[i].changeAppearance();
-        }
+        Ground.startSecondTrial();
     }
 
     /**
@@ -122,10 +120,6 @@ public class ObjectPool
      */
     public void update(GameContainer gc)
     {
-        if (player.active)
-        {
-            player.update(gc, camera.x, camera.y);
-        }
         if (!pastPlayer.active)
         {
             pastPlayer.recordPoint(player.abX, player.abY);
@@ -133,6 +127,10 @@ public class ObjectPool
         else
         {
             pastPlayer.update(gc, camera.x, camera.y);
+        }
+        if (player.active)
+        {
+            player.update(gc, camera.x, camera.y);
         }
         updateObjects(grounds, gc);
         startGate.update(gc, camera.x, camera.y);
@@ -291,8 +289,15 @@ public class ObjectPool
         // playerとgroundの衝突
         for (Ground ground : grounds)
         {
-            if (ground.active && !(ground.getType() == Ground.Type.DISAPPEAR))
+            check:
+            if (ground.active)
             {
+                if ((ground.getType() == Ground.Type.TO_DISAPPEAR && isPlayerWarp == true)
+                        || (ground.getType() == Ground.Type.TO_APPEAR && isPlayerWarp == false))
+                {
+                    break check;
+                }
+
                 if ((player.abX + player.width / 2 >= ground.abX - ground.width / 2
                         && player.abX - player.width / 2 <= ground.abX + ground.width / 2)
                         && player.abY + player.height / 2 >= ground.abY - ground.height / 2
